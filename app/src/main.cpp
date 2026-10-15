@@ -30,11 +30,23 @@ int main()
             break;
         }
 
-        cv::Mat frame_mask = preprocess(frame);
-        std::vector<cv::RotatedRect> lights;
-        std::vector<double> angles;
-        findLights(frame_mask, lights, angles);
-        std::vector<cv::RotatedRect> armors = matchLights(lights, angles);
+        cv::Mat red_mask = preprocess(frame, true);
+        cv::Mat blue_mask = preprocess(frame, false);
+        
+        std::vector<cv::RotatedRect> blueLights;
+        std::vector<double> blueAngles;
+        findLights(blue_mask, blueLights, blueAngles);
+        std::vector<cv::RotatedRect> armors = matchLights(blueLights, blueAngles);
+
+        std::vector<cv::RotatedRect> redLights;
+        std::vector<double> redAngles;
+        findLights(red_mask, redLights, redAngles);
+        std::vector<cv::RotatedRect> redArmors = matchLights(redLights, redAngles);
+
+        for (int i = 0; i < static_cast<int>(redArmors.size()); i++)
+        {
+            armors.push_back(redArmors[i]);
+        }
 
         cv::Mat frame_result = frame.clone();
         for (int i = 0; i < static_cast<int>(armors.size()); i++)
@@ -44,11 +56,12 @@ int main()
             for (int k = 0; k < 4; k++)
             {
                 cv::line(frame_result, vertices[k], vertices[(k + 1) % 4],
-                cv::Scalar(0, 0, 255), 2);
+                cv::Scalar(0, 255, 0), 2);
             }
         }
         cv::imshow("frame", frame_result);
-        int key = cv::waitKey(1);
+        //cv::imshow("frame1", red_mask);
+        int key = cv::waitKey(20);
         
         if (key == ' ')
         {

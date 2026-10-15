@@ -18,7 +18,7 @@ void findLights(const cv::Mat& mask,
     for(int i = 0;i < static_cast<int>(contours.size());i++)
     {
         double area = cv::contourArea(contours[i]);
-        if (area < 5.0 || area > 150.0)
+        if (area < 2.0 || area > 400.0)
         {
             continue;
         }
@@ -28,12 +28,12 @@ void findLights(const cv::Mat& mask,
         double longSide = std::fmax(rotatedRect.size.width, rotatedRect.size.height);
         double shortSide = std::fmin(rotatedRect.size.width, rotatedRect.size.height);
 
-        if (shortSide <= 0 || longSide < 8.0)
+        if (shortSide == 0 || longSide < 4.0)
         {
             continue;
         }
         double rate = longSide / shortSide;
-        if (rate < 2.0 || rate > 10.0)
+        if (rate < 1.5 || rate > 10.0)
         {
             continue;
         }
@@ -45,7 +45,7 @@ void findLights(const cv::Mat& mask,
         cv::Point2f longEdge = cv::norm(edge1) >= cv::norm(edge2) ? edge1 : edge2;
         double tilt = std::atan2(std::abs(longEdge.x), std::abs(longEdge.y)) * 180.0 / CV_PI;
 
-        if (tilt > 35.0)
+        if (tilt > 37.0)
         {
             continue;
         }
@@ -54,7 +54,7 @@ void findLights(const cv::Mat& mask,
         {
             longEdge = -longEdge;
         }
-        double angle = std::atan2(longEdge.x, longEdge.y) * 180.0 / CV_PI;
+        double angle = std::atan2(longEdge.x, longEdge.y) * 180.0 / M_PI;
         lights.push_back(rotatedRect);
         angles.push_back(angle);
     }

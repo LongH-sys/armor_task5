@@ -17,20 +17,20 @@ std::vector<cv::RotatedRect> matchLights(
             double length1 = std::fmax(lights[i].size.width, lights[i].size.height);
             double length2 = std::fmax(lights[j].size.width, lights[j].size.height);
             double lengthRate = std::fmax(length1, length2) / std::fmin(length1, length2);
-            if (lengthRate > 1.5)
+            if (lengthRate > 2.0)
             {
                 continue;
             }
 
             double angleDiff = std::abs(angles[i] - angles[j]);
-            if (angleDiff > 15.0)
+            if (angleDiff > 20.0)
             {
                 continue;
             }
 
             double averageLength = (length1 + length2) / 2.0;
             double heightDiff = std::abs(lights[i].center.y - lights[j].center.y);
-            if (heightDiff / averageLength > 0.5)
+            if (heightDiff / averageLength > 0.6)
             {
                 continue;
             }
@@ -38,7 +38,7 @@ std::vector<cv::RotatedRect> matchLights(
             cv::Point2f centerDiff = lights[i].center - lights[j].center;
             double distance = cv::norm(centerDiff);
             double distanceRate = distance / averageLength;
-            if (distanceRate < 1.8 || distanceRate > 5.0)
+            if (distanceRate < 1.2 || distanceRate > 5.5)
             {
                 continue;
             }
