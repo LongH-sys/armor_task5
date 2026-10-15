@@ -11,7 +11,7 @@ cv::Mat preprocess(const cv::Mat& frame, bool choice)
     if (choice)
     {
         cv::Mat mask1, mask2;
-        cv::inRange(frame_hsv, cv::Scalar(0, 120, 115), cv::Scalar(10, 255, 255), mask1);
+        cv::inRange(frame_hsv, cv::Scalar(0, 70, 90), cv::Scalar(15, 255, 255), mask1);
         cv::inRange(frame_hsv, cv::Scalar(170, 120, 115), cv::Scalar(179, 255, 255), mask2);
         cv::bitwise_or(mask1, mask2, frame_mask);
     }
