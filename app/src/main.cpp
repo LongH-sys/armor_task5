@@ -47,9 +47,7 @@ int main()
                 cv::Scalar(0, 0, 255), 2);
             }
         }
-
-        cv::imshow("frame", frame);
-        cv::imshow("frame_", frame_result);
+        cv::imshow("frame", frame_result);
         int key = cv::waitKey(1);
         
         if (key == ' ')
