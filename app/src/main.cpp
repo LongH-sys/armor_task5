@@ -47,7 +47,7 @@ int main()
         {
             armors.push_back(redArmors[i]);
         }
-
+        armors = filterArmors(armors);
         cv::Mat frame_result = frame.clone();
         for (int i = 0; i < static_cast<int>(armors.size()); i++)
         {

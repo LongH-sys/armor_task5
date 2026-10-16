@@ -5,3 +5,6 @@
 std::vector<cv::RotatedRect> matchLights(
     const std::vector<cv::RotatedRect>& lights,
     const std::vector<double>& angles);
+std::vector<cv::RotatedRect> filterArmors(
+    const std::vector<cv::RotatedRect>& armors
+);
